@@ -9,9 +9,4 @@ const option = {
 
 const socket = require('socket.io')
 
-
-// io.on('connection', socket => {
-//     console.log('connect')
-// })
-
 module.exports = socket

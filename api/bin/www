@@ -20,13 +20,18 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-
+var {redis} = require('../sockets/redis');
 /** 
  * Listen on provided port, on all network interfaces.
  */
+redis();
+
 const io = socket(server)
 io.on("connection" , socket=>{
-  console.log("connect ...")
+  socket.on("hello", (arg) => {
+    console.log(arg)
+		io.emit('test', {name: 'hello', arg: arg});
+  });
 })
 
 server.listen(port);

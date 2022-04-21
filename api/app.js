@@ -23,7 +23,7 @@ const authnMiddleWare = require('./middleware/auth.middleware').auth
 // mongoose.set('useFindAndModify', false);
 
 // sequelize.sync() 
-connectMongoDB()
+// connectMongoDB()
 
 const app = express();
 
@@ -59,8 +59,8 @@ app.use(function(req, res, next) {
 // })
 
 app.use('/',indexRouter);
-app.use('/FAQ', FAQRouter);
-app.use('/users', userRouter);
+// app.use('/FAQ', FAQRouter);
+// app.use('/users', userRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));
