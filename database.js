@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import { DB_HOST } from './utils/constant.js'
+import { DB_HOST } from './utils/constants.js'
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',

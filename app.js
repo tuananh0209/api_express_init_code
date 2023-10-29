@@ -5,7 +5,7 @@ import cors from 'cors';
 
 import route from './routes/index.js';
 import sequelize from './database.js';
-import { PORT } from './utils/constant.js';
+import { PORT } from './utils/constants.js';
 
 function app() {
     const app = express();
