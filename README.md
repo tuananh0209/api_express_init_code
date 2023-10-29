@@ -13,8 +13,6 @@
 
 * Install dependencies
 
-	`cd <project_name>`
-
 	`npm install`
 
 * Build and run in dev environment
