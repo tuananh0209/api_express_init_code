@@ -2,6 +2,7 @@ import express, { json, urlencoded } from "express";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import cors from "cors";
+import logger from "morgan";
 
 import route from "./routes/index.js";
 import sequelize from "./database.js";
@@ -13,7 +14,9 @@ function app() {
     app.use(cors());
     app.use(helmet());
     app.use(json({ limit: "20mb" }));
+    app.use(urlencoded({ extended: true }));
     app.use(cookieParser());
+    app.use(logger("dev"));
 
     route(app);
     app.listen(port, () => {
