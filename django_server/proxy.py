@@ -1,10 +1,11 @@
 import json
+from urllib.parse import parse_qsl
 
 import requests
 from django.conf import settings
 from django.core.exceptions import BadRequest
 from django.http import HttpResponse
-from django.urls import path
+from django.urls import re_path
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
@@ -68,7 +69,9 @@ def parse_form_data(request):
 
 def parse_url_end_coded(request):
     """Access application/x-www-form-urlencoded form data from the request."""
-    form_data = request.POST.dict()
+    data_str = str(request.body, encoding='utf-8')
+    data_list = parse_qsl(data_str)
+    form_data = dict(data_list)
 
     return {"data": form_data}
 
@@ -82,18 +85,21 @@ def parse_body(request):
         return parse_json_data(request)
     elif content_type == "application/x-www-form-urlencoded":
         return parse_url_end_coded(request)
+    elif content_type == "text/plain" and str(request.body, encoding="utf-8") == "":
+        # Return empty if content_type is 'text/plain' and body is empty.
+        return {}
     raise BadRequest(f"Content type {content_type} do not supported.")
 
 
 @csrf_exempt
 @require_http_methods(["GET", "POST", "PUT", "DELETE", "PATCH"])
-def proxy(request, path):
+def proxy(request, **kwargs):
     """Proxy forward the request from Django server to Express server."""
-    api_url = f"{EXPRESS_SERVER_URL}/{path}"
+    _path = kwargs.get("path", "")
+    api_url = f"{EXPRESS_SERVER_URL}/{_path}"
 
     requests_args = get_request_args(request)
 
-    # response = requests.request(request.method, api_url, **requests_args)
     # Forward the request to the Express API
     response = requests.request(method=request.method, url=api_url, **requests_args)
     # Create a response for the client based on the Express APIs response
@@ -103,5 +109,5 @@ def proxy(request, path):
 
 
 urlpatterns = [
-    path('<path:path>', proxy, name='proxy'),
+    re_path(r'^(?P<path>.*)$', proxy, name='proxy'),
 ]
