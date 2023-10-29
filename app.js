@@ -6,7 +6,7 @@ import cors from "cors";
 import route from "./routes/index.js";
 import sequelize from "./database.js";
 
-let port = process.env.PORT || 3002;
+let port = process.env.PORT || 3000;
 
 function app() {
     const app = express();
@@ -18,10 +18,10 @@ function app() {
     route(app);
     app.listen(port, () => {
         console.log(`Server listening on port ${port}`);
-      });
+    });
 }
 
 sequelize.sync({ logging: false }).then(() => {
     console.log("Connect DB successfully");
     app();
-})
+});
