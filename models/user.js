@@ -41,7 +41,7 @@ User.init(
         is_staff: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
-            defaultValue: true,
+            defaultValue: false,
         },
         is_active: {
             type: DataTypes.BOOLEAN,

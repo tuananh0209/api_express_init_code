@@ -71,11 +71,16 @@ const userController = {
     updateUser: async function (req, res) {
         const data = req.body;
         try {
-            const user = await User.update(data, {
-                where: {
-                    id: data.id,
-                },
-            });
+            // Find user.
+            const user = await User.findByPk(data.id);
+            if (_.isEmpty(user)) {
+                res.status(204).json({ error: "NOT_FOUND" });
+                return;
+            }
+            //  Remove id from data.
+            delete data.id;
+            // Update user data.
+            await user.update(data);
             res.status(200).json({ result: "OK", user });
         } catch {
             res.status(500).json({ error: "INTERNAL" });

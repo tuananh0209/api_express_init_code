@@ -49,10 +49,10 @@ const userValidator = {
 
             const error_msg = {};
 
-            if (user && user.email == userData.email) {
+            if (user && user.email == userData.email && user.id != userData.id) {
                 error_msg["email"] = ["Email is duplicated with another user."];
             }
-            if (user && user.username == userData.username) {
+            if (user && user.username == userData.username && user.id != userData.id) {
                 error_msg["email"] = ["Usrename is duplicated with another user."];
             }
 
