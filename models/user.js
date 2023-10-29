@@ -57,6 +57,6 @@ User.init({
     timestamps: false
 });
 
-export default User
+export default User;
 
 

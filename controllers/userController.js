@@ -1,5 +1,5 @@
 import User from '../models/user.js';
-import _ from 'lodash'
+import _ from 'lodash';
 
 const userController = {
     getUser: async function(req, res) {
@@ -16,7 +16,7 @@ const userController = {
             res.status(500).json({ error: "INTERNAL" });
         }
         if (_.isEmpty(result)) res.status(404).json({ error: 'NOT_FOUND' })
-        else res.status(200).json({ user: result })
+        else res.status(200).json({ user: result });
     },
 
     createUser: async function(req, res) {
@@ -61,4 +61,4 @@ const userController = {
     }
 }
 
-export default userController
+export default userController;

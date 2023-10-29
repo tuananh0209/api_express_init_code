@@ -1,8 +1,9 @@
 import { Sequelize } from 'sequelize';
+import { DB_HOST } from './utils/constant.js'
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    host: './db.sqlite3',
+    host: DB_HOST,
     logging: false
 });
 
